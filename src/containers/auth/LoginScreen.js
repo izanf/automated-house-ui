@@ -29,7 +29,7 @@ class LoginScreen extends Component {
           <View >
             <Button
               onPress={() => this.props.navigation.navigate('Dashboard')}
-              title="Login"
+              title="Logar"
             />
           </View>
           <View>
