@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Button, TextInput, StyleSheet } from 'react-native'
 
+
 class LoginScreen extends Component {
   constructor(props) {
     super(props)
@@ -14,7 +15,7 @@ class LoginScreen extends Component {
         </Text>
         <TextInput
           style={styles.usuario}
-          placeholder="Insira aqui o nome do usuário"
+          placeholder="Usuário"
         />
         <Text
           style={styles.text}>
@@ -23,7 +24,8 @@ class LoginScreen extends Component {
         <TextInput
           style={styles.usuario}
           secureTextEntry={true}
-          placeholder="Insira aqui a senha do usuário"
+          placeholder="Senha "
+          numberOfLines={1}
         />
         <View style={styles.botoes}>
           <View >
@@ -47,21 +49,26 @@ class LoginScreen extends Component {
 const styles = {
   container: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%'
+    flex:1,
+    flexDirection:'column',
+    justifyContent:'center'
   },
   text: {
+    padding:10,
     fontWeight: 'bold',
     color: '#0084b4',
+    justifyContent: 'flex-start'
   },
   usuario: {
-    height: '8%',
-    width: '80%'
+    padding:5,
+    height: '10%',
+    width: '85%',
+    justifyContent:'center'
   },
   botoes: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    margin:5,
+    justifyContent: 'space-around',
   }
 }
 
