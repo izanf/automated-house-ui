@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { shape, func } from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-native'
 
-import { AppState, View, Text, Button, TextInput, Dimensions } from 'react-native'
+import { View, Text, Button, TextInput } from 'react-native'
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -10,35 +11,20 @@ class LoginScreen extends Component {
     this.state = {
       user: '',
       pass: '',
-      screenHeight: 0,
-      appState: AppState.currentState,
     }
   }
 
   handleState = (field, value) => this.setState({ [field]: value })
 
-  componentDidMount() {
-    this.handleState('screenHeight', Dimensions.get('window').height)
-
-    AppState.addEventListener('change', () => {
-      this.handleState('screenHeight', Dimensions.get('window').height)
-    })
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleState())
-  }
-
   render() {
-    const { user, pass, screenHeight } = this.state
-    console.log(this.state.appState, this.state.screenHeight)
+    const { user, pass } = this.state
 
     const styles = {
       container: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: screenHeight,
+        height: '100%',
       },
       title: {
         fontSize: 30,
@@ -52,10 +38,11 @@ class LoginScreen extends Component {
         marginBottom: 10,
       },
       label: {
-        fontWeight: 'bold',
         color: '#551A8B',
       },
       input: {
+        paddingTop: 10,
+        paddingBottom: 5,
         paddingLeft: 5,
         paddingRight: 5,
         width: '100%',
@@ -67,7 +54,6 @@ class LoginScreen extends Component {
         width: '90%',
       },
       btnLogin: {
-        fontWeight: 'bold',
         textAlign: 'center',
         color: '#FFF',
         backgroundColor: '#551A8B',
@@ -75,7 +61,6 @@ class LoginScreen extends Component {
         paddingBottom: 10,
       },
       btnRecoveryPass: {
-        fontWeight: 'bold',
         textAlign: 'center',
         color: '#BBB',
         paddingTop: 10,
@@ -116,18 +101,12 @@ class LoginScreen extends Component {
           />
         </View>
         <View style={styles.btnsContainer}>
-          <Text
-            onPress={() => this.props.navigation.navigate('Dashboard')}
-            style={styles.btnLogin}
-          >
-            Entrar
-          </Text>
-          <Text
-            onPress={() => this.props.navigation.navigate('Dashboard')}
-            style={styles.btnRecoveryPass}
-          >
-            Recuperar Senha
-          </Text>
+          <Link to="/dashboard">
+            <Text style={styles.btnLogin}>Entrar</Text>
+          </Link>
+          <Link>
+            <Text style={styles.btnRecoveryPass}>Recuperar Senha</Text>
+          </Link>
         </View>
         <Text style={styles.version}>v0.0.1</Text>
       </View>
@@ -135,10 +114,8 @@ class LoginScreen extends Component {
   }
 }
 
-LoginScreen.propTypes = {
-  navigation: shape({
-    navigate: func.isRequired,
-  }).isRequired,
-}
-
-export default LoginScreen
+export default connect(
+  store => ({
+    auth: store.auth
+  })
+)(LoginScreen)

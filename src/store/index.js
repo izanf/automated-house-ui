@@ -1,51 +1,17 @@
-import { addNavigationHelpers } from 'react-navigation';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { createReduxBoundAddListener, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
-import { Provider, connect } from 'react-redux';
-import React from 'react';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import { routerReducer } from 'react-router-redux';
 
 import auth from './auth';
 
-const appReducer = combineReducers({
+const reducers = combineReducers({
   auth,
+  router: routerReducer,
 });
 
-// Note: createReactNavigationReduxMiddleware must be run before createReduxBoundAddListener
-const middleware = createReactNavigationReduxMiddleware(
-  "root",
-  state => state.nav,
-);
-const addListener = createReduxBoundAddListener("root");
+const middlewares = [thunk, logger];
 
-class App extends React.Component {
-  render() {
-    return (
-      <AppNavigator navigation={addNavigationHelpers({
-        dispatch: this.props.dispatch,
-        state: this.props.nav,
-        addListener,
-      })} />
-    );
-  }
-}
+const store = createStore(reducers, applyMiddleware(...middlewares));
 
-const mapStateToProps = (state) => ({
-  nav: state.nav
-});
-
-const AppWithNavigationState = connect(mapStateToProps)(App);
-
-const store = createStore(
-  appReducer,
-  applyMiddleware(middleware),
-);
-
-class Root extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <AppWithNavigationState />
-      </Provider>
-    );
-  }
-}
+export default store

@@ -1,10 +1,17 @@
 import React from 'react'
-import Routes from './src/Routes'
+import { NativeRouter } from 'react-router-native'
+import { Provider } from 'react-redux';
 
-export default class App extends React.Component {
-  render() {
-    return (
+import Routes from './src/Routes'
+import store from './src/store'
+
+
+const App = () => (
+  <Provider store={store}>
+    <NativeRouter>
       <Routes />
-    )
-  }
-}
+    </NativeRouter>
+  </Provider>
+)
+
+export default App
