@@ -8,15 +8,15 @@ const RootNavigator = StackNavigator({
   Home: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null
-    }
+      header: null,
+    },
   },
   Dashboard: {
     screen: DashboardScreen,
     navigationOptions: {
-      headerTitle: 'Dashboard'
-    }
-  }
+      headerTitle: 'Dashboard',
+    },
+  },
 })
 
 const Routes = () => <RootNavigator />
