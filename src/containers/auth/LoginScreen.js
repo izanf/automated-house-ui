@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-native'
 
-import { View, Text, Button, TextInput } from 'react-native'
+import { View, Text, TextInput } from 'react-native'
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -14,7 +14,9 @@ class LoginScreen extends Component {
     }
   }
 
-  handleState = (field, value) => this.setState({ [field]: value })
+  handleState = (field, value) => {
+    this.setState({ [field]: value })
+  }
 
   render() {
     const { user, pass } = this.state
@@ -73,7 +75,7 @@ class LoginScreen extends Component {
         bottom: 5,
         right: 10,
         color: '#CCC',
-      }
+      },
     }
 
     return (
@@ -85,7 +87,7 @@ class LoginScreen extends Component {
             style={styles.input}
             placeholder="exemplo"
             value={user}
-            onChangeText={(text) => this.handleState('user', text)}
+            onChangeText={text => this.handleState('user', text)}
             underlineColorAndroid="rgba(0,0,0,0)"
           />
         </View>
@@ -96,7 +98,7 @@ class LoginScreen extends Component {
             secureTextEntry
             placeholder="******"
             value={pass}
-            onChangeText={(text) => this.handleState('pass', text)}
+            onChangeText={text => this.handleState('pass', text)}
             underlineColorAndroid="rgba(0,0,0,0)"
           />
         </View>
@@ -104,7 +106,7 @@ class LoginScreen extends Component {
           <Link to="/dashboard">
             <Text style={styles.btnLogin}>Entrar</Text>
           </Link>
-          <Link>
+          <Link to="#construcao">
             <Text style={styles.btnRecoveryPass}>Recuperar Senha</Text>
           </Link>
         </View>
@@ -114,8 +116,6 @@ class LoginScreen extends Component {
   }
 }
 
-export default connect(
-  store => ({
-    auth: store.auth
-  })
-)(LoginScreen)
+export default connect(store => ({
+  auth: store.auth,
+}))(LoginScreen)
